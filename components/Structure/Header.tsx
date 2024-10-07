@@ -23,7 +23,7 @@ const Header: React.FC = () => {
       />
 
       <TextInput
-        style={[styles.searchBar, globalStyles.textBase]}
+        style={[styles.searchBar]}
         placeholder="Faites votre recherche ici..."
       >
       </TextInput>
@@ -41,5 +41,6 @@ const styles = StyleSheet.create({
     height: hp(4.4),
     borderRadius: ms(5),
     fontStyle: "italic",
+    fontSize: ms(12),
   },
 });

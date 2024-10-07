@@ -81,7 +81,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation })
             <Text
               style={[
                 { color: isFocused ? colors.accentTertiary : colors.textColor },
-                globalStyles.textSm,
+                { fontSize: ms(10) },
               ]}
             >
               {label as string}

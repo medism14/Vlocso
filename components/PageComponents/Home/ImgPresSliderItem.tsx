@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Image,
   StyleSheet,
@@ -39,7 +41,11 @@ type RootStackParamList = {
   Accueil: undefined;
 };
 
-const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({ item, handleNext, handleBack }) => {
+const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({
+  item,
+  handleNext,
+  handleBack,
+}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
@@ -47,35 +53,27 @@ const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({ item, handleNext,
       <Image source={item.image} style={styles.presImg} />
 
       <View style={styles.presImgButtonNextBack}>
-        <Pressable
-          onPress={handleBack}
-          style={styles.presImgPressButton}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} size={ms(14)}/>
+        <Pressable onPress={handleBack} style={styles.presImgPressButton}>
+          <FontAwesomeIcon icon={faChevronLeft} size={ms(14)} />
         </Pressable>
 
-        <Pressable
-          onPress={handleNext}
-          style={styles.presImgPressButton}
-        >
+        <Pressable onPress={handleNext} style={styles.presImgPressButton}>
           <FontAwesomeIcon icon={faChevronRight} size={ms(14)} />
         </Pressable>
       </View>
 
       <View style={styles.imgPresTextContainer}>
-        <Text style={[styles.imgPresText, globalStyles.text2xl]}>
+        <Text style={styles.imgPresText}>
           {item.text}
         </Text>
       </View>
 
       <View style={styles.presImgButtonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Accueil")}
+          onPress={() => console.log("touched")}
           style={styles.presImgButton}
         >
-          <Text
-            style={[globalStyles.textBase, { fontFamily: "Inter-SemiBold" }]}
-          >
+          <Text style={{ fontFamily: "Inter-SemiBold", fontSize: ms(12) }}>
             Acheter ou louer dès maintenant
           </Text>
           <FontAwesomeIcon icon={faAngleRight} />
@@ -120,6 +118,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Inter-Black",
     marginHorizontal: ms(10),
+    fontSize: ms(18),
   },
   presImgButtonContainer: {
     position: "absolute",

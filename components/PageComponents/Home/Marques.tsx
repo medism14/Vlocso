@@ -1,4 +1,13 @@
-import { FlatList, Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
+/** @format */
+
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { ms } from "react-native-size-matters";
 import { colors } from "../../../globals/colors";
@@ -70,17 +79,21 @@ const Marques: React.FC<MarquesProps> = ({ brands, title, position }) => {
     });
   };
 
-  const alignmentStyle: ViewStyle = position === "left" 
-    ? { alignItems: "flex-start" } 
-    : { alignItems: "flex-end" };
+  const alignmentStyle: ViewStyle =
+    position === "left"
+      ? { alignItems: "flex-start" }
+      : { alignItems: "flex-end" };
 
   return (
     <View style={alignmentStyle}>
       <Text
         style={[
-          { fontFamily: "Inter-Bold" },
-          globalStyles.textXl,
-          { textAlign: position },
+          {
+            fontFamily: "Inter-Bold",
+            textAlign: position,
+            color: colors.textColor,
+            fontSize: ms(16),
+          },
         ]}
       >
         {title}

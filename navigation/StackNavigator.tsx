@@ -36,6 +36,8 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomBar: React.FC = () => {
+  const user = false;
+
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
       <Tab.Screen
@@ -82,17 +84,31 @@ const BottomBar: React.FC = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="ProfilStack"
-        component={ProfilStack}
-        options={{
-          tabBarLabel: "Profil",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faUser} color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-      />
+      {!user ? (
+        <Tab.Screen
+          name="AuthStack"
+          component={AuthStack}
+          options={{
+            tabBarLabel: "Profil",
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesomeIcon icon={faUser} color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="ProfilStack"
+          component={ProfilStack}
+          options={{
+            tabBarLabel: "Profil",
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesomeIcon icon={faUser} color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 };

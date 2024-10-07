@@ -7,6 +7,8 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Pressable,
+  Platform,
 } from "react-native";
 import globalStyles from "../../globals/globalStyles";
 import React from "react";
@@ -18,275 +20,327 @@ import {
   SectionProduct,
 } from "../../components";
 import { ms } from "react-native-size-matters";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCar,
+  faGlobe,
+  faMotorcycle,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { colors } from "../../globals/colors";
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const recommandationsGenerale = [
-  {
-    id: 1,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 2,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 3,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 4,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 5,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 6,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 7,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 8,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 9,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 10,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
+  [
+    {
+      id: 1,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 2,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 3,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 4,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+  ],
+  [
+    {
+      id: 1,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 2,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 3,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 4,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+  ],
+  [
+    {
+      id: 9,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 10,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
 ];
 
 const voitures = [
-  {
-    id: 1,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 2,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 3,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 4,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 5,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 6,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 7,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 8,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 9,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
-  {
-    id: 10,
-    title: "Ford Mustang GT 2024",
-    image: require("../../assets/mustang gt.png"),
-    category: "Vente",
-    type: "Neuf",
-    price: "55 000",
-    location: "Corte, Corse",
-  },
+  [
+    {
+      id: 1,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 2,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 3,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 4,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
+  [
+    {
+      id: 5,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 6,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 7,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 8,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
+  [
+    {
+      id: 9,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 10,
+      title: "Ford Mustang GT 2024",
+      image: require("../../assets/ford5.jpeg"),
+      category: "Vente",
+      type: "Neuf",
+      price: "55 000",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
 ];
 
 const motos = [
-  {
-    id: 1,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 2,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 3,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 4,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 5,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 6,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 7,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 8,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 9,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
-  {
-    id: 10,
-    title: "Honda CB 2019",
-    image: require("../../assets/motoHarley.png"),
-    category: "Location",
-    price: "50",
-    location: "Corte, Corse",
-  },
+  [
+    {
+      id: 1,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 2,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 3,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 4,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
+  [
+    {
+      id: 5,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 6,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+    {
+      id: 7,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 8,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
+  [
+    {
+      id: 9,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: true,
+    },
+    {
+      id: 10,
+      title: "Honda CB 2019",
+      image: require("../../assets/motoHarley.png"),
+      category: "Location",
+      price: "50",
+      location: "Corte, Corse",
+      premium: false,
+    },
+  ],
 ];
 
 const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -305,7 +359,44 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
           <AllMarques />
 
           {/* Les produits dans recommandations générales */}
-          <SectionProduct icon={<FontAwesomeIcon icon={faGlobe} size={ms(22)} />} title={"Récommandation Generale"} />
+          <SectionProduct
+            icon={<FontAwesomeIcon icon={faGlobe} size={ms(22)} />}
+            title={"Récommandation Generale"}
+            elements={recommandationsGenerale}
+          />
+
+          {/* Les produits dans recommandations voitures */}
+          <SectionProduct
+            icon={<FontAwesomeIcon icon={faCar} size={ms(22)} />}
+            title={"Récommandation Voitures"}
+            elements={voitures}
+          />
+
+          {/* Les produits dans recommandations motos */}
+          <SectionProduct
+            icon={<FontAwesomeIcon icon={faMotorcycle} size={ms(22)} />}
+            title={"Récommandation Motos"}
+            elements={motos}
+          />
+
+          {/* Components pour poster */}
+        <View style={styles.bottomPostContainer}>
+          <LinearGradient
+            colors={['#F0F0F0', '#E0E0E0']}
+            style={styles.bottomPostGradient}
+          >
+            <Text style={styles.bottomPostText}>
+              Vendez ou louez dès maintenant
+            </Text>
+
+            <Pressable style={styles.bottomPostButton}>
+              <Text style={styles.bottomPostButtonText}>
+                Déposer une annonce
+              </Text>
+              <FontAwesomeIcon icon={faPlus} size={ms(15)} color="#FFFFFF" />
+            </Pressable>
+          </LinearGradient>
+        </View>
         </View>
       </ScrollView>
     </View>
@@ -315,57 +406,49 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  presImg: {
-    width: "100%",
-    height: hp(20),
-    marginHorizontal: "auto",
-    borderRadius: ms(10),
-    position: "relative",
+  bottomPostContainer: {
+    marginVertical: ms(20),
+    width: "90%",
+    alignSelf: "center",
+    borderRadius: ms(15),
+    overflow: 'hidden',
+    borderWidth: ms(1),
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
   },
-  presImgBlackOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    borderRadius: ms(10),
+  bottomPostGradient: {
+    padding: ms(20),
+    alignItems: 'center',
   },
-  imgPresTextContainer: {
-    position: "absolute",
-    transform: [{ translateY: 25 }],
-    bottom: "50%",
-    width: "100%",
-    alignItems: "center",
-    zIndex: 20,
+  bottomPostText: {
+    fontFamily: "Inter-ExtraBold",
+    fontSize: ms(16),
+    color: '#333',
+    marginBottom: ms(15),
+    textAlign: 'center',
   },
-  imgPresText: {
-    color: "#FFFFFF",
-    textAlign: "center",
-    fontFamily: "Inter-Black",
-    marginHorizontal: ms(10),
+  bottomPostButton: {
+    backgroundColor: '#2C3E50',
+    borderRadius: ms(6),
+    paddingVertical: ms(7),
+    paddingHorizontal: ms(16),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  presImgblackOverlay: {
-    position: "absolute",
-    bottom: "0%",
-  },
-  presImgButtonContainer: {
-    position: "absolute",
-    bottom: "10%",
-    width: "100%",
-    alignItems: "center",
-    zIndex: 15,
-  },
-  presImgButton: {
-    transform: [{ translateX: -25 }],
-    bottom: 0,
-    backgroundColor: "white",
-    paddingVertical: ms(5),
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: ms(15),
-    borderRadius: ms(5),
+  bottomPostButtonText: {
+    color: '#FFFFFF',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: ms(13),
+    marginRight: ms(8),
   },
 });
