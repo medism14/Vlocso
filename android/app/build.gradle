@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.medism14.mobile'
+    namespace 'com.medism14.vlocso'
     defaultConfig {
-        applicationId 'com.medism14.mobile'
+        applicationId 'com.medism14.vlocso'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

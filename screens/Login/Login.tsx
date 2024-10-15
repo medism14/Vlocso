@@ -1,7 +1,14 @@
 /** @format */
 
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { ms } from "react-native-size-matters";
 import {
   Input,
@@ -24,7 +31,7 @@ interface LoginFormData {
 }
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-  const { width } = Dimensions.get("window");
+  const { width, height } = Dimensions.get("window");
   const actualWidth = width - ms(40);
   const { control, handleSubmit, reset } = useForm<LoginFormData>();
 
@@ -36,90 +43,98 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          position: "relative",
-          width: actualWidth,
-          alignItems: "center",
-        }}
-      >
-        {/* Back button */}
-        <BackButton onPress={() => navigation.goBack()} />
+    <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+      <View style={[styles.container, { paddingVertical: ms(20) }]}>
+        <View
+          style={{
+            position: "relative",
+            width: actualWidth,
+            alignItems: "center",
+          }}
+        >
+          {/* Back button */}
+          <BackButton onPress={() => navigation.goBack()} />
 
-        {/* Title et Image */}
-        <OperationTitle title={"Authentification"} />
+          {/* Title et Image */}
+          <OperationTitle title={"Authentification"} />
 
-        {/* Corps pour l'authentification */}
-        <SecondaryBody>
-          <View>
-            <Input
-              label={"Email"}
-              binding={true}
-              placeholder={"Ex:(kaoutar@gmail.com)"}
-              icon={faEnvelope}
-              control={control}
-              name="email"
-              marginTop={false}
-              rules={{
-                required: "L'émail est requis",
-                pattern: {
-                  value: /^\S+@\S+\.\S+$/,
-                  message: "Votre email n'a pas le bon format",
-                },
-              }}
-            />
+          {/* Corps pour l'authentification */}
+          <SecondaryBody>
+            <View>
+              <Input
+                label={"Email"}
+                binding={true}
+                placeholder={"Ex:(kaoutar@gmail.com)"}
+                icon={faEnvelope}
+                control={control}
+                name="email"
+                marginTop={false}
+                rules={{
+                  required: "L'émail est requis",
+                  pattern: {
+                    value: /^\S+@\S+\.\S+$/,
+                    message: "Votre email n'a pas le bon format",
+                  },
+                }}
+              />
 
-            <Input
-              label={"Mot de passe"}
-              binding={true}
-              placeholder={"Ex:(Yasmine123)"}
-              icon={faKey}
-              secure={true}
-              control={control}
-              name="password"
-              rules={{
-                required: "Le mot de passe est réquis",
-                minLength: {
-                  value: 5,
-                  message: "Le mot de passe doit au moins contenir 5 caractère",
-                },
-              }}
-            />
+              <Input
+                label={"Mot de passe"}
+                binding={true}
+                placeholder={"Ex:(Yasmine123)"}
+                icon={faKey}
+                secure={true}
+                control={control}
+                name="password"
+                rules={{
+                  required: "Le mot de passe est réquis",
+                  minLength: {
+                    value: 5,
+                    message:
+                      "Le mot de passe doit au moins contenir 5 caractère",
+                  },
+                }}
+              />
 
-            <Pressable
-              style={{ marginTop: ms(3) }}
-              onPress={() =>
-                navigation.navigate("AuthStack", {
-                  screen: "PasswordRecovery",
-                })
-              }
-            >
-              <Text style={styles.forgetPassword}>Mot de passe oublié</Text>
-            </Pressable>
+              <Pressable
+                style={{ marginTop: ms(3) }}
+                onPress={() =>
+                  navigation.navigate("AuthStack", {
+                    screen: "PasswordRecovery",
+                  })
+                }
+              >
+                <Text style={styles.forgetPassword}>Mot de passe oublié</Text>
+              </Pressable>
 
-            <ValidationButton
-              text={"S'authentifier"}
-              handleSubmit={handleSubmit}
-              onSubmit={onSubmit}
-            />
+              <ValidationButton
+                text={"S'authentifier"}
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+              />
 
-            <Text style={styles.redirectText}>
-              Vous n'avez pas de compte ?{" "}
-              <Text style={styles.RedirecthighlightedText}>Inscrivez-vous</Text>
-            </Text>
+              <Text style={styles.redirectText}>
+                Vous n'avez pas de compte ?{" "}
+                <Text style={styles.RedirecthighlightedText}>
+                  Inscrivez-vous
+                </Text>
+              </Text>
 
-            <ProviderAuth />
-          </View>
-        </SecondaryBody>
+              <ProviderAuth />
+            </View>
+          </SecondaryBody>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     justifyContent: "center",

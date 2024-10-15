@@ -1,5 +1,5 @@
 {
-  "name": "mobile",
+  "name": "vlocso",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
@@ -47,7 +47,9 @@
     "semver": "^7.6.3",
     "xml2js": "^0.6.2",
     "react-native-gesture-handler": "~2.14.0",
-    "expo-web-browser": "~12.8.2"
+    "expo-web-browser": "~12.8.2",
+    "expo-random": "~13.6.0",
+    "expo-dev-client": "~3.3.12"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

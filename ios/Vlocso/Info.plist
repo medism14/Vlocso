@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>mobile</string>
+    <string>Vlocso</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,7 +27,14 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.medism14.mobile</string>
+          <string>vlocso</string>
+          <string>com.medism14.vlocso</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>exp+vlocso</string>
         </array>
       </dict>
     </array>

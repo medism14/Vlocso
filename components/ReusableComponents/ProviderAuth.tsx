@@ -11,16 +11,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProviderAuth: React.FC = () => {
   const [userInfo, setUserInfo] = useState(null);
 
+  // Google Sign in
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
       "217146752812-f826cq3bt93ktlhlu14tdd31fvl1t8f8.apps.googleusercontent.com",
     iosClientId:
       "217146752812-fhj4jvhnks99246mm87mii00j7cmlvvo.apps.googleusercontent.com",
   });
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   useEffect(() => {
     handleSignInWithGoogle();
-  }, [response])
+  }, [response]);
+
+  const startGoogleAuth = async () => {
+    if (isAuthenticating) return;
+    setIsAuthenticating(true);
+    await promptAsync();
+  };
 
   const handleSignInWithGoogle = async () => {
     const user = await AsyncStorage.getItem("@user");
@@ -32,6 +40,7 @@ const ProviderAuth: React.FC = () => {
     } else {
       setUserInfo(JSON.parse(user));
     }
+    setIsAuthenticating(false);
   };
 
   const getUserInfo = async (token: string) => {
@@ -52,8 +61,23 @@ const ProviderAuth: React.FC = () => {
     }
   };
 
+  // Facebook Sign in
+
   return (
     <View style={styles.container}>
+      {/* Google */}
+      <Pressable
+        style={styles.providerButton}
+        onPress={startGoogleAuth}
+        disabled={isAuthenticating}
+      >
+        <Image
+          source={require("../../assets/google-icon.png")}
+          style={styles.providerIcon}
+        />
+        <Text style={styles.providerText}>Continuer avec Google</Text>
+      </Pressable>
+
       {/* Facebook */}
       <Pressable style={styles.providerButton}>
         <Image
@@ -63,17 +87,7 @@ const ProviderAuth: React.FC = () => {
         <Text style={styles.providerText}>Continuer avec Facebook</Text>
       </Pressable>
 
-      {/* Google */}
-      <Pressable style={styles.providerButton} onPress={() => promptAsync()}>
-        <Image
-          source={require("../../assets/google-icon.png")}
-          style={styles.providerIcon}
-        />
-        <Text style={styles.providerText}>Continuer avec Google</Text>
-      </Pressable>
-      <Text style={{ fontSize: ms(12) }}>
-        {JSON.stringify(userInfo)}
-      </Text>
+      <Text style={{ fontSize: ms(12) }}>{JSON.stringify(userInfo)}</Text>
     </View>
   );
 };

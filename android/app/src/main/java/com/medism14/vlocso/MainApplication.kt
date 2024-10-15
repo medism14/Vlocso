@@ -1,4 +1,4 @@
-package com.medism14.mobile
+package com.medism14.vlocso
 
 import android.app.Application
 import android.content.res.Configuration

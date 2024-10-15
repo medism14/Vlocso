@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     >
       <Image
         source={require("../../assets/vlocso.png")}
-        style={{ width: wp("20%"), height: undefined, aspectRatio: 1 }}
+        style={{ width: wp("15%"), height: undefined, aspectRatio: 1, marginVertical: ms(15) }}
       />
 
       <TextInput
