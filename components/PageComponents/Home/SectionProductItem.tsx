@@ -1,17 +1,12 @@
 /** @format */
 
-import { Image, StyleSheet, Text, View, Platform, Pressable } from "react-native";
 import React from "react";
+import { Image, StyleSheet, Text, View, Platform, Pressable } from "react-native";
 import { ms } from "react-native-size-matters";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faArrowCircleRight,
-  faCrown,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCrown, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../globals/colors";
-import { ImageSourcePropType } from "react-native";
-import globalStyles from "../../../globals/globalStyles";
+import type { ImageSourcePropType } from "react-native";
 
 interface ItemProps {
   id: number;
@@ -26,7 +21,6 @@ interface ItemProps {
 
 interface SectionProductItemProps {
   items: ItemProps[];
-  index: number;
   widthParent: number;
 }
 
@@ -34,31 +28,23 @@ const SectionProductItem: React.FC<SectionProductItemProps> = ({
   items,
   widthParent,
 }) => {
+
   const renderProduct = (item: ItemProps) => (
-    <View style={styles.product}>
-      {/* L'image et le premium */}
+    <View style={styles.product} key={item.id}>
       <View>
-        <Image source={item.image} style={styles.image} />
+        <Image source={item.image} style={styles.image} accessibilityLabel={item.title} />
         {item.premium && (
           <View style={styles.premium}>
             <FontAwesomeIcon icon={faCrown} size={ms(16)} color="white" />
           </View>
         )}
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={[styles.category]}>{item.category}</Text>
+        <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
+        <Text style={styles.category} numberOfLines={1}>{item.category}</Text>
       </View>
 
       {item.type && (
         <View style={styles.conditionCard}>
-          <Text
-            style={{
-              fontFamily: "Inter-Regular",
-              color: colors.textColor,
-              fontSize: ms(11),
-            }}
-          >
-            {item.type}
-          </Text>
+          <Text style={styles.conditionText}>{item.type}</Text>
         </View>
       )}
 
@@ -69,40 +55,36 @@ const SectionProductItem: React.FC<SectionProductItemProps> = ({
     </View>
   );
 
+  const renderProductColumn = (startIndex: number) => (
+    <View style={styles.productColumn}>
+      {items[startIndex] && renderProduct(items[startIndex])}
+      {items[startIndex + 1] && renderProduct(items[startIndex + 1])}
+      {!items[startIndex] && !items[startIndex + 1] && (
+        <Pressable 
+          onPress={() => console.log("plus d'annonce pressed")} 
+          style={styles.moreAnnonceWrapper}
+          accessibilityLabel="Voir plus d'annonce"
+          accessibilityRole="button"
+        >
+          <View style={styles.moreAnnonce}>
+            <View style={styles.moreAnnonceContent}>
+              <View style={styles.moreAnnoncePlus}>
+                <FontAwesomeIcon icon={faPlus} size={ms(26)} />
+              </View>
+              <Text style={styles.moreAnnonceText}>
+                Voir plus d'annonce
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+      )}
+    </View>
+  );
+
   return (
     <View style={[styles.container, { width: widthParent }]}>
-      {/* Une Colonne de produits (deux produit) */}
-      <View style={[styles.productColumn]}>
-        {/* Un seul produit */}
-        {items[0] && renderProduct(items[0])}
-
-        {/* Un seul produit */}
-        {items[1] && renderProduct(items[1])}
-      </View>
-
-      {/* Une Colonne de produits (deux produit) */}
-      <View style={[styles.productColumn]}>
-        {/* Un seul produit */}
-        {items[2] && renderProduct(items[2])}
-
-        {/* Un seul produit */}
-        {items[3] && renderProduct(items[3])}
-
-        {!items[2] && !items[3] && (
-          <Pressable onPress={() => console.log("plus d'annonce pressed")} style={styles.moreAnnonceWrapper}>
-            <View style={styles.moreAnnonce}>
-              <View style={styles.moreAnnonceContent}>
-                <View style={styles.moreAnnoncePlus}>
-                  <FontAwesomeIcon icon={faPlus} size={ms(26)} style={{}} />
-                </View>
-                <Text style={styles.moreAnnonceText}>
-                  Voir plus d'annonce
-                </Text>
-              </View>
-            </View>
-          </Pressable>
-        )}
-      </View>
+      {renderProductColumn(0)}
+      {renderProductColumn(2)}
     </View>
   );
 };
@@ -152,7 +134,7 @@ const styles = StyleSheet.create({
   category: {
     fontFamily: "Inter-SemiBold",
     color: colors.textColor,
-    marginTop: Platform.OS === "ios" && ms(1),
+    marginTop: Platform.OS === "ios" ? ms(1) : ms(0),
     fontSize: ms(13),
   },
   conditionCard: {
@@ -160,8 +142,13 @@ const styles = StyleSheet.create({
     borderWidth: ms(2),
     borderColor: colors.textColor,
     alignSelf: "flex-start",
-    paddingVertical: Platform.OS === "ios" && ms(1),
+    paddingVertical: Platform.OS === "ios" ? ms(1) : ms(0),
     paddingHorizontal: ms(15),
+  },
+  conditionText: {
+    fontFamily: "Inter-Regular",
+    color: colors.textColor,
+    fontSize: ms(11),
   },
   price: {
     color: colors.accentTertiary,
@@ -175,10 +162,11 @@ const styles = StyleSheet.create({
   },
   moreAnnonceWrapper: {
     flex: 1,
+    width: "100%",
     padding: ms(3), 
   },
   moreAnnonce: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
     flex: 1,
     justifyContent: "center",
     borderRadius: ms(5),
@@ -203,9 +191,10 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-SemiBold",
     textAlign: "center",
     fontSize: ms(20),
+    marginHorizontal: ms(10),
   },
   moreAnnoncePlus: {
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
     width: ms(40),
     height: ms(40),
     borderRadius: ms(20),

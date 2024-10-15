@@ -1,5 +1,6 @@
 /** @format */
 
+import React, { useCallback, useRef, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -8,116 +9,101 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import React, { useRef, useState } from "react";
 import { ms } from "react-native-size-matters";
-import globalStyles from "../../../globals/globalStyles";
-import { colors } from "../../../globals/colors";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { colors } from "../../../globals/colors";
 import SectionProductItem from "./SectionProductItem";
 
 interface SectionProductProps {
   icon: React.ReactElement;
   title: string;
-  elements: any[];
+  elements: any[][];
 }
 
 const { width } = Dimensions.get("window");
-const widthWithoutPadding = width - ms(40);
 
 const SectionProduct: React.FC<SectionProductProps> = ({
   icon,
   title,
   elements,
 }) => {
-  const flatListRef = useRef(null);
+  const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleBack = () => {
-    if (currentIndex > 0) {
+  const widthWithoutPadding = width - ms(40);
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50
+  }).current;
+
+  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  }, []);
+
+  const handleScroll = (direction: 'back' | 'next') => {
+    const newIndex = direction === 'back' ? currentIndex - 1 : currentIndex + 1;
+    if (newIndex >= 0 && newIndex < elements.length) {
       flatListRef.current?.scrollToIndex({
-        index: currentIndex - 1,
+        index: newIndex,
         animated: true,
       });
-      setCurrentIndex((prev) => prev - 1);
     }
   };
 
-  const handleNext = () => {
-    if (currentIndex < elements.length - 1) {
-      flatListRef.current?.scrollToIndex({
-        index: currentIndex + 1,
-        animated: true,
-      });
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
+  const renderNavigationButton = (direction: 'back' | 'next') => (
+    <Pressable
+      onPress={() => handleScroll(direction)}
+      style={({ pressed }) => [
+        styles.presImgPressButton,
+        pressed && styles.buttonPressed,
+      ]}
+      accessibilityLabel={direction === 'back' ? "Previous" : "Next"}
+      accessibilityRole="button"
+    >
+      <FontAwesomeIcon 
+        icon={direction === 'back' ? faChevronLeft : faChevronRight} 
+        size={Dimensions.get("window").width > 500 ? ms(15) : ms(12)} 
+      />
+    </Pressable>
+  );
 
   return (
-    <View style={{ marginTop: ms(30) }}>
-      {/* La partie haute du composant */}
-      <View style={[styles.header]}>
-        {/* Pour le titre et l'icone */}
-        <View style={[styles.title]}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.title}>
           {icon}
-          <Text
-            style={{
-              fontSize: ms(16),
-              fontFamily: "Inter-Bold",
-              color: colors.textColor,
-            }}
-          >
-            {title}
-          </Text>
+          <Text style={styles.titleText}>{title}</Text>
         </View>
-
-        {/* Afficher les boutons avant et arrière */}
         <View style={styles.presImgButtonNextBack}>
-          <Pressable
-            onPress={() => handleBack()}
-            style={({ pressed }) => [
-              styles.presImgPressButton,
-              pressed && styles.buttonPressed,
-            ]}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} size={ms(12)} />
-          </Pressable>
-
-          <Pressable
-            onPress={() => handleNext()}
-            style={({ pressed }) => [
-              styles.presImgPressButton,
-              pressed && styles.buttonPressed,
-            ]}
-          >
-            <FontAwesomeIcon icon={faChevronRight} size={ms(12)} />
-          </Pressable>
+          {renderNavigationButton('back')}
+          {renderNavigationButton('next')}
         </View>
       </View>
 
-      {/* Pour faire une délimiation */}
       <View style={styles.titleLine} />
 
-      {/* Les produits */}
-      <View>
-        <FlatList
-          ref={flatListRef}
-          data={elements}
-          renderItem={({ item, index }) => (
-            <SectionProductItem
-              items={item}
-              index={index}
-              widthParent={widthWithoutPadding}
-            />
-          )}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+      <FlatList
+        ref={flatListRef}
+        data={elements}
+        renderItem={({ item }) => (
+          <SectionProductItem
+            items={item}
+            widthParent={widthWithoutPadding}
+          />
+        )}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
+      />
     </View>
   );
 };
@@ -125,6 +111,9 @@ const SectionProduct: React.FC<SectionProductProps> = ({
 export default SectionProduct;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: ms(30),
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -132,8 +121,13 @@ const styles = StyleSheet.create({
   },
   title: {
     flexDirection: "row",
-    gap: ms(5),
+    gap: Dimensions.get("window").width > 500 ? ms(8) : ms(5),
     alignItems: "center",
+  },
+  titleText: {
+    fontSize: Dimensions.get("window").width > 500 ? ms(22) : ms(16),
+    fontFamily: "Inter-Bold",
+    color: colors.textColor,
   },
   titleLine: {
     marginTop: ms(5),

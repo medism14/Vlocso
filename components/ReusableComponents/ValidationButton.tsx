@@ -19,12 +19,6 @@ const ValidationButton: React.FC<ValidationButtonProps> = ({
   disabled = false,
 }) => {
 
-  const handlePress = () => {
-    if (!disabled) {
-      handleSubmit(onSubmit());
-    }
-  };
-
   return (
     <Pressable
       style={({ pressed }) => [
@@ -32,7 +26,7 @@ const ValidationButton: React.FC<ValidationButtonProps> = ({
         pressed && { transform: [{ scale: 0.95 }] },
         disabled && styles.disabledButton,
       ]}
-      onPress={handlePress}
+      onPress={handleSubmit(onSubmit)}
       disabled={disabled}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
@@ -47,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.tertiary,
     padding: ms(10),
     borderRadius: ms(5),
-    marginTop: ms(20),
+    marginTop: ms(22),
     alignItems: "center",
   },
   disabledButton: {
@@ -55,7 +49,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: "white",
-    fontSize: ms(15),
+    fontSize: ms(14),
     fontWeight: "bold",
   },
 });

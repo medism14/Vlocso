@@ -14,6 +14,7 @@ import Input from "./ReusableComponents/Input";
 import OperationTitle from "./ReusableComponents/OperationTitle";
 import SecondaryBody from "./ReusableComponents/SecondaryBody";
 import ValidationButton from "./ReusableComponents/ValidationButton";
+import ProviderAuth from "./ReusableComponents/ProviderAuth";
 
 export {
     Header,
@@ -32,4 +33,5 @@ export {
     OperationTitle,
     SecondaryBody,
     ValidationButton,
+    ProviderAuth,
 }

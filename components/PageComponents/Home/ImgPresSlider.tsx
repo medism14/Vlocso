@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import ImgPresSliderItem from "./ImgPresSliderItem";
 import { colors } from "../../../globals/colors";
 import { ms } from "react-native-size-matters";
@@ -33,13 +33,13 @@ const ImgPresSlider: React.FC = () => {
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  // Pour changer de slide
   const changementSlides = (): void => {
     if (indexRef.current >= data.length - 1) {
       indexRef.current = 0;
     } else {
       indexRef.current++;
     }
-    setCurrentIndex(indexRef.current);
 
     flatListRef.current?.scrollToIndex({
       index: indexRef.current,
@@ -66,23 +66,34 @@ const ImgPresSlider: React.FC = () => {
     };
   }, []);
 
-  const handleNext = (): void => {
-    changementSlides();
-    if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50
+  }).current;
 
-    setTimeout(() => {
-      reset4Seconds();
-    }, 3000);
-  };
+  const onViewableItemsChanged = useCallback(({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+      reset4Seconds()
+    }
+  }, []);
 
-  const handleBack = (): void => {
-    changementSlides();
-    if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+  // const handleNext = (): void => {
+  //   changementSlides();
+  //   if (intervalIdRef.current) clearInterval(intervalIdRef.current);
 
-    setTimeout(() => {
-      reset4Seconds();
-    }, 3000);
-  };
+  //   setTimeout(() => {
+  //     reset4Seconds();
+  //   }, 3000);
+  // };
+
+  // const handleBack = (): void => {
+  //   changementSlides();
+  //   if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+
+  //   setTimeout(() => {
+  //     reset4Seconds();
+  //   }, 3000);
+  // };
 
   return (
     <View style={styles.container}>
@@ -92,8 +103,6 @@ const ImgPresSlider: React.FC = () => {
         renderItem={({ item }) => (
           <ImgPresSliderItem
             item={item}
-            handleNext={handleNext}
-            handleBack={handleBack}
           />
         )}
         horizontal
@@ -101,6 +110,8 @@ const ImgPresSlider: React.FC = () => {
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
       />
       <View style={styles.pagination}>
         <View style={[styles.dot, currentIndex === 0 && styles.activeDot]} />

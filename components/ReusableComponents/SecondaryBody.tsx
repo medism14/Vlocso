@@ -20,7 +20,8 @@ export default SecondaryBody
 const styles = StyleSheet.create({
     secondaryBody: {
         backgroundColor: colors.secondary,
-        padding: ms(15),
+        paddingVertical: ms(20),
+        paddingHorizontal: ms(15),
         width: "100%",
         borderRadius: ms(10),
     }

@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, View, ImageSourcePropType } from "react-native";
+import { Image, Pressable, StyleSheet, ImageSourcePropType } from "react-native";
 import React from "react";
 import { ms } from "react-native-size-matters";
 

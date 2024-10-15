@@ -9,6 +9,7 @@ import {
   ScrollView,
   Pressable,
   Platform,
+  Dimensions,
 } from "react-native";
 import globalStyles from "../../globals/globalStyles";
 import React from "react";
@@ -29,6 +30,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../globals/colors";
 import { LinearGradient } from 'expo-linear-gradient';
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 
 const recommandationsGenerale = [
@@ -344,6 +346,7 @@ const motos = [
 ];
 
 const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
+
   return (
     <View style={globalStyles.pageDefaultStyle}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -360,21 +363,21 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
 
           {/* Les produits dans recommandations générales */}
           <SectionProduct
-            icon={<FontAwesomeIcon icon={faGlobe} size={ms(22)} />}
+            icon={<FontAwesomeIcon icon={faGlobe} size={Dimensions.get("window").width > 500 ? ms(22) : ms(16)} />}
             title={"Récommandation Generale"}
             elements={recommandationsGenerale}
           />
 
           {/* Les produits dans recommandations voitures */}
           <SectionProduct
-            icon={<FontAwesomeIcon icon={faCar} size={ms(22)} />}
+            icon={<FontAwesomeIcon icon={faCar} size={Dimensions.get("window").width > 500 ? ms(23) : ms(16)} />}
             title={"Récommandation Voitures"}
             elements={voitures}
           />
 
           {/* Les produits dans recommandations motos */}
           <SectionProduct
-            icon={<FontAwesomeIcon icon={faMotorcycle} size={ms(22)} />}
+            icon={<FontAwesomeIcon icon={faMotorcycle} size={Dimensions.get("window").width > 500 ? ms(27) : ms(16)} />}
             title={"Récommandation Motos"}
             elements={motos}
           />
@@ -393,7 +396,7 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
               <Text style={styles.bottomPostButtonText}>
                 Déposer une annonce
               </Text>
-              <FontAwesomeIcon icon={faPlus} size={ms(15)} color="#FFFFFF" />
+              <FontAwesomeIcon icon={faPlus} size={ms(17)} color="#FFFFFF" />
             </Pressable>
           </LinearGradient>
         </View>
@@ -407,8 +410,9 @@ export default Home;
 
 const styles = StyleSheet.create({
   bottomPostContainer: {
-    marginVertical: ms(20),
-    width: "90%",
+    marginTop: ms(0),
+    marginBottom: ms(30),
+    width: '90%',
     alignSelf: "center",
     borderRadius: ms(15),
     overflow: 'hidden',
@@ -421,7 +425,7 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
       },
       android: {
-        elevation: 8,
+        elevation: 4,
       },
     }),
   },
@@ -439,8 +443,8 @@ const styles = StyleSheet.create({
   bottomPostButton: {
     backgroundColor: '#2C3E50',
     borderRadius: ms(6),
-    paddingVertical: ms(7),
-    paddingHorizontal: ms(16),
+    paddingVertical: ms(10),
+    paddingHorizontal: ms(22),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -448,7 +452,7 @@ const styles = StyleSheet.create({
   bottomPostButtonText: {
     color: '#FFFFFF',
     fontFamily: 'Inter-SemiBold',
-    fontSize: ms(13),
+    fontSize: ms(14),
     marginRight: ms(8),
   },
 });

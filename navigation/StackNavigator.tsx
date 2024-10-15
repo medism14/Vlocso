@@ -239,12 +239,6 @@ const StackNavigator: React.FC = () => {
           component={PremiumSubscription}
           options={{ headerShown: false }}
         />
-
-        <Stack.Screen
-          name="AuthStack"
-          component={AuthStack}
-          options={{ headerShown: false }}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );

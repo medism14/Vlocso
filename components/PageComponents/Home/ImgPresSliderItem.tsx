@@ -33,8 +33,6 @@ interface ImgPresSliderItemProps {
     image: any;
     text: string;
   };
-  handleNext: () => void;
-  handleBack: () => void;
 }
 
 type RootStackParamList = {
@@ -43,8 +41,6 @@ type RootStackParamList = {
 
 const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({
   item,
-  handleNext,
-  handleBack,
 }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -52,7 +48,7 @@ const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({
     <View style={{ marginTop: ms(30), width: adjustedWidth }}>
       <Image source={item.image} style={styles.presImg} />
 
-      <View style={styles.presImgButtonNextBack}>
+      {/* <View style={styles.presImgButtonNextBack}>
         <Pressable onPress={handleBack} style={styles.presImgPressButton}>
           <FontAwesomeIcon icon={faChevronLeft} size={ms(14)} />
         </Pressable>
@@ -60,7 +56,7 @@ const ImgPresSliderItem: React.FC<ImgPresSliderItemProps> = ({
         <Pressable onPress={handleNext} style={styles.presImgPressButton}>
           <FontAwesomeIcon icon={faChevronRight} size={ms(14)} />
         </Pressable>
-      </View>
+      </View> */}
 
       <View style={styles.imgPresTextContainer}>
         <Text style={styles.imgPresText}>

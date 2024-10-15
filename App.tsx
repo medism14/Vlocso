@@ -1,4 +1,6 @@
 /** @format */
+// ios: 217146752812-fhj4jvhnks99246mm87mii00j7cmlvvo.apps.googleusercontent.com
+// android: 217146752812-f826cq3bt93ktlhlu14tdd31fvl1t8f8.apps.googleusercontent.com
 
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -10,8 +12,8 @@ import {
   View,
 } from "react-native";
 import { useFonts } from "expo-font";
+import 'react-native-gesture-handler';
 import { useCallback, useEffect } from "react";
-import globalStyle from "./globals/globalStyles";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
