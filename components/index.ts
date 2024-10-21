@@ -15,6 +15,11 @@ import OperationTitle from "./ReusableComponents/OperationTitle";
 import SecondaryBody from "./ReusableComponents/SecondaryBody";
 import ValidationButton from "./ReusableComponents/ValidationButton";
 import ProviderAuth from "./ReusableComponents/ProviderAuth";
+import BackFormButton from "./ReusableComponents/BackFormButton";
+import SectionProfil from "./PageComponents/Profil/SectionProfil";
+import PostCard from "./PageComponents/Post/PostCard";
+import ButtonEdit from "./ReusableComponents/ButtonEdit";
+import ButtonDelete from "./ReusableComponents/ButtonDelete";
 
 export {
     Header,
@@ -34,4 +39,9 @@ export {
     SecondaryBody,
     ValidationButton,
     ProviderAuth,
+    BackFormButton,
+    SectionProfil,
+    PostCard,
+    ButtonEdit,
+    ButtonDelete,
 }

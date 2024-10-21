@@ -8,13 +8,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { colors } from "../../globals/colors";
-import globalStyles from "../../globals/globalStyles";
 
 const Header: React.FC = () => {
   return (
     <View
       style={{
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Image
@@ -36,7 +36,9 @@ export default Header;
 const styles = StyleSheet.create({
   searchBar: {
     padding: ms(10),
-    backgroundColor: colors.inputColor,
+    borderWidth: ms(1),
+    borderColor: "gray",
+    backgroundColor: colors.primary,
     width: wp(80),
     height: hp(4.4),
     borderRadius: ms(5),

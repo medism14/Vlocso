@@ -10,10 +10,10 @@ interface OperationTitleProps {
 
 const OperationTitle: React.FC<OperationTitleProps> = ({ title }) => {
   return (
-    <View style={{ alignItems: "center", marginBottom: ms(20) }}>
+    <View style={{ alignItems: "center", justifyContent: "center", marginBottom: ms(20) }}>
       <Image
-        source={require("../../assets/vlocso.png")}
-        style={{ width: ms(80), height: undefined, aspectRatio: 1 }}
+        source={require("../../assets/logo-withoutName.png")}
+        style={{ width: ms(70), height: undefined, aspectRatio: 1 }}
       />
       <Text style={styles.title}>{title}</Text>
     </View>
@@ -24,7 +24,7 @@ export default OperationTitle;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: ms(22),
+    fontSize: ms(20),
     fontFamily: "Inter-Bold",
     textDecorationLine: "underline",
   },

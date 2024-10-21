@@ -4,6 +4,10 @@
   <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Nous avons besoin d'accéder à votre galerie d'images.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Nous avons besoin d'accéder à votre caméra.</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>

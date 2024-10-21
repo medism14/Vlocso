@@ -1,21 +1,29 @@
 /** @format */
 
 import React from "react";
-import { Image, StyleSheet, Text, View, Platform, Pressable } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  Pressable,
+} from "react-native";
 import { ms } from "react-native-size-matters";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCrown, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../globals/colors";
 import type { ImageSourcePropType } from "react-native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 interface ItemProps {
   id: number;
   title: string;
-  image: ImageSourcePropType;
-  category: string;
-  type: string;
+  images: ImageSourcePropType[];
+  transaction: string;
+  condition: string;
   price: string;
-  location: string;
+  city: string;
   premium: boolean;
 }
 
@@ -28,31 +36,44 @@ const SectionProductItem: React.FC<SectionProductItemProps> = ({
   items,
   widthParent,
 }) => {
+  const navigation = useNavigation<NavigationProp<any>>();
 
   const renderProduct = (item: ItemProps) => (
-    <View style={styles.product} key={item.id}>
+    <Pressable
+      style={styles.product}
+      key={item.id}
+      onPress={() => navigation.navigate('AnnounceEdit', { item })}
+    >
       <View>
-        <Image source={item.image} style={styles.image} accessibilityLabel={item.title} />
+        <Image
+          source={item.images[0]}
+          style={styles.image}
+          accessibilityLabel={item.title}
+        />
         {item.premium && (
           <View style={styles.premium}>
             <FontAwesomeIcon icon={faCrown} size={ms(16)} color="white" />
           </View>
         )}
-        <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
-        <Text style={styles.category} numberOfLines={1}>{item.category}</Text>
+        <Text style={styles.title} numberOfLines={1}>
+          {item.title}
+        </Text>
+        <Text style={styles.category} numberOfLines={1}>
+          {item.transaction}
+        </Text>
       </View>
 
-      {item.type && (
+      {item.condition && (
         <View style={styles.conditionCard}>
-          <Text style={styles.conditionText}>{item.type}</Text>
+          <Text style={styles.conditionText}>{item.condition}</Text>
         </View>
       )}
 
       <View>
         <Text style={styles.price}>{item.price}€</Text>
-        <Text style={styles.location}>{item.location}</Text>
+        <Text style={styles.location}>{item.city}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 
   const renderProductColumn = (startIndex: number) => (
@@ -60,8 +81,8 @@ const SectionProductItem: React.FC<SectionProductItemProps> = ({
       {items[startIndex] && renderProduct(items[startIndex])}
       {items[startIndex + 1] && renderProduct(items[startIndex + 1])}
       {!items[startIndex] && !items[startIndex + 1] && (
-        <Pressable 
-          onPress={() => console.log("plus d'annonce pressed")} 
+        <Pressable
+          onPress={() => console.log("plus d'annonce pressed")}
           style={styles.moreAnnonceWrapper}
           accessibilityLabel="Voir plus d'annonce"
           accessibilityRole="button"
@@ -71,9 +92,7 @@ const SectionProductItem: React.FC<SectionProductItemProps> = ({
               <View style={styles.moreAnnoncePlus}>
                 <FontAwesomeIcon icon={faPlus} size={ms(26)} />
               </View>
-              <Text style={styles.moreAnnonceText}>
-                Voir plus d'annonce
-              </Text>
+              <Text style={styles.moreAnnonceText}>Voir plus d'annonce</Text>
             </View>
           </View>
         </Pressable>
@@ -163,7 +182,7 @@ const styles = StyleSheet.create({
   moreAnnonceWrapper: {
     flex: 1,
     width: "100%",
-    padding: ms(3), 
+    padding: ms(3),
   },
   moreAnnonce: {
     backgroundColor: colors.secondary,
@@ -173,12 +192,12 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        shadowOffset: { width: ms(0), height: ms(0) },
+        shadowOpacity: ms(0.1),
+        shadowRadius: ms(4),
       },
       android: {
-        elevation: 4,
+        elevation: ms(4),
       },
     }),
   },

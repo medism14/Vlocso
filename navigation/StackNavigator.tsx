@@ -3,7 +3,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -18,25 +18,28 @@ import {
   AnnounceCreate,
   AnnounceDetails,
   AnnounceEdit,
-  CGU,
   Home,
   Login,
   Messages,
+  NewPost,
   PasswordChange,
   PasswordRecovery,
   Post,
   PremiumSubscription,
   Profil,
+  ProfilInformations,
+  ProfilPassword,
   Register,
   Search,
 } from "../screens";
 import { TabBar } from "../components";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomBar: React.FC = () => {
-  const user = false;
+  const user = useSelector((state: any) => state.auth.userLogin);
 
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
@@ -150,6 +153,12 @@ const PostStack: React.FC = () => {
         component={Post}
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen
+        name="NewPost"
+        component={NewPost}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -172,6 +181,18 @@ const ProfilStack: React.FC = () => {
       <Stack.Screen
         name="Profil"
         component={Profil}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ProfilInformations"
+        component={ProfilInformations}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ProfilPassword"
+        component={ProfilPassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

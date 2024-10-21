@@ -11,7 +11,9 @@ import AnnounceCreate from "./AnnounceCreate/AnnounceCreate"
 import PasswordChange from "./PasswordChange/PasswordChange"
 import PasswordRecovery from "./PasswordRecovery/PasswordRecovery"
 import PremiumSubscription from "./PremiumSubscription/PremiumSubscription"
-import CGU from "./CGU/CGU"
+import ProfilInformations from "./ProfilInformations/ProfilInformations"
+import ProfilPassword from "./ProfilPassword/ProfilPassword"
+import NewPost from "./NewPost/NewPost"
 
 
 
@@ -29,5 +31,7 @@ export {
     PasswordChange,
     PasswordRecovery,
     PremiumSubscription,
-    CGU,
+    ProfilInformations,
+    ProfilPassword,
+    NewPost,
 }

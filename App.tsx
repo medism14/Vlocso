@@ -1,6 +1,10 @@
 /** @format */
-// ios: 217146752812-fhj4jvhnks99246mm87mii00j7cmlvvo.apps.googleusercontent.com
-// android: 217146752812-f826cq3bt93ktlhlu14tdd31fvl1t8f8.apps.googleusercontent.com
+// Google auth:
+// ios id: 217146752812-fhj4jvhnks99246mm87mii00j7cmlvvo.apps.googleusercontent.com
+// android id: 217146752812-f826cq3bt93ktlhlu14tdd31fvl1t8f8.apps.googleusercontent.com
+
+// Android sha-1: 4C:5A:8F:0A:51:BE:A9:85:7D:D7:3B:04:0E:B7:22:81:06:E6:58:C1
+// OR : 63:4D:45:8B:2C:65:0E:28:01:AD:6C:25:89:43:B2:7E:65:18:6A:D0
 
 import * as SplashScreen from "expo-splash-screen";
 import {

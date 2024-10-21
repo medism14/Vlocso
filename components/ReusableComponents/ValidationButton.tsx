@@ -39,7 +39,7 @@ export default ValidationButton;
 const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: colors.tertiary,
-    padding: ms(10),
+    padding: ms(11),
     borderRadius: ms(5),
     marginTop: ms(22),
     alignItems: "center",
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "white",
     fontSize: ms(14),
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
   },
 });
